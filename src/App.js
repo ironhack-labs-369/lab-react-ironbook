@@ -1,20 +1,32 @@
 import { useState } from 'react';
 import './App.css';
-import users from './users';
+import usersJson from './users';
 import { v4 as uuidv4 } from 'uuid';
 
 function App() {
-    const [search, setSearch] = useState('');
+    const [searchField, setSearchField] = useState('');
+    const [users, setUsers] = useState(usersJson);
 
     const handleChange = (event) => {
-        setSearch(event.target.value);
-        console.log('search', search);
+        setSearchField(event.target.value);
     };
     const handleSubmit = (event) => {
-        // event.preventDefault();
-        setSearch('');
+        event.preventDefault();
+        const filtered = users.filter((person) => {
+            return (
+                person.firstName
+                    .toLowerCase()
+                    .includes(searchField.toLowerCase()) ||
+                person.lastName
+                    .toLowerCase()
+                    .includes(searchField.toLowerCase())
+            );
+        });
+        console.log('filtered', filtered);
+        setUsers(() => [...filtered]);
+        setSearchField('');
     };
-    const displayContacts = users.map((user, index) => {
+    const displayUsers = users.map((user) => {
         return (
             <tr key={uuidv4()}>
                 <td>{user.firstName}</td>
@@ -42,11 +54,11 @@ function App() {
                     id="search"
                     placeholder="Search..."
                     onChange={handleChange}
-                    style={{ width: '60vw' }}
+                    style={{ width: '27rem' }}
                 />
                 <button type="submit">Search</button>
             </form>
-            <table>
+            <table style={{ margin: '0 0 10% 5%' }}>
                 <thead>
                     <tr>
                         <th>First Name</th>
@@ -56,7 +68,7 @@ function App() {
                         <th>Links</th>
                     </tr>
                 </thead>
-                <tbody>{displayContacts}</tbody>
+                <tbody>{displayUsers}</tbody>
             </table>
         </div>
     );

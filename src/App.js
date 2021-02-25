@@ -2,6 +2,8 @@ import { useState } from 'react';
 import './App.css';
 import usersJson from './users';
 import { v4 as uuidv4 } from 'uuid';
+import UsersList from './Components/UsersList';
+import Form from './Components/Form';
 
 function App() {
     const [users, setUsers] = useState(usersJson);
@@ -48,15 +50,13 @@ function App() {
         // setSearchField('');
     };
 
-    const campusList = () => {
-        campus.map((camp) => {
-            return (
-                <option value={camp} key={camp}>
-                    {camp}
-                </option>
-            );
-        });
-    };
+    const campusList = campus.map((camp) => {
+        return (
+            <option value={camp} key={camp}>
+                {camp}
+            </option>
+        );
+    });
 
     const displayUsers = users.map((user) => {
         return (
@@ -71,85 +71,15 @@ function App() {
     });
     return (
         <div className="App">
-            <form
-                onSubmit={handleSubmit}
-                style={{
-                    width: '80vw',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'space-around',
-                    alignItems: 'flex-start',
-                }}
-            >
-                <div
-                    style={{
-                        margin: '5% 0 3% 0',
-                    }}
-                >
-                    <input
-                        type="text"
-                        name="search"
-                        id="search"
-                        placeholder="Search..."
-                        onChange={handleChange}
-                        style={{ width: '20rem' }}
-                    />
-                    <button type="submit">Search</button>
-                </div>
-                <div
-                    style={{
-                        display: 'flex',
-                        justifyContent: 'flex-start',
-                        width: '30rem',
-                        marginBottom: '10%',
-                    }}
-                >
-                    <div style={{ marginRight: '2%' }}>
-                        <label htmlFor="teacher">Teacher</label>
-                        <input
-                            type="checkbox"
-                            name="teacher"
-                            checked={isTeacher}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div style={{ marginRight: '2%' }}>
-                        <label htmlFor="student">Student</label>
-                        <input
-                            type="checkbox"
-                            name="student"
-                            checked={isStudent}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div>
-                        <label htmlFor="campus">Campus</label>
-                        <select
-                            name="campus"
-                            id="campus"
-                            value={campus}
-                            style={{ width: ' 6rem' }}
-                            onChange={handleChange}
-                        >
-                            <option value="">All</option>
-                            {campusList}
-                        </select>
-                    </div>
-                </div>
-            </form>
-
-            <table style={{ margin: '0 0 10% 5%' }}>
-                <thead>
-                    <tr>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Campus</th>
-                        <th>Role</th>
-                        <th>Links</th>
-                    </tr>
-                </thead>
-                <tbody>{displayUsers}</tbody>
-            </table>
+            <Form
+                isStudent={isStudent}
+                isTeacher={isTeacher}
+                campus={campus}
+                handleChange={handleChange}
+                handleSubmit={handleSubmit}
+                campusList={campusList}
+            />
+            <UsersList displayUsers={displayUsers} />
         </div>
     );
 }

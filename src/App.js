@@ -22,7 +22,7 @@ function App() {
             } else {
                 setIsStudent(() => !isStudent);
             }
-        } else if (event.target.type === 'select') {
+        } else if (event.target.type === 'select-one') {
             setCampus(event.target.value);
         } else {
             setSearchField(event.target.value);
@@ -34,7 +34,8 @@ function App() {
 
         const filteredSearch = users.filter((user) => {
             return (
-                ((isTeacher || isStudent) &&
+                (((isTeacher && user.role === 'teacher') ||
+                    (isStudent && user.role === 'student')) &&
                     `${user.firstName}`
                         .toLowerCase()
                         .includes(`${searchField.toLowerCase()}`)) ||
@@ -49,7 +50,7 @@ function App() {
         setUsers(() => [...filteredSearch]);
         // setSearchField('');
     };
-
+    console.log('campus', campus);
     const campusList = campus.map((camp) => {
         return (
             <option value={camp} key={camp}>

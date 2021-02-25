@@ -6,8 +6,8 @@ import { v4 as uuidv4 } from 'uuid';
 function App() {
     const [searchField, setSearchField] = useState('');
     const [users, setUsers] = useState(usersJson);
-    const [roleTeacher, setRoleTeacher] = useState(false);
-    const [roleStudent, setRoleStudent] = useState(false);
+    const [isTeacher, setIsTeacher] = useState(true);
+    const [isStudent, setIsStudent] = useState(true);
 
     const handleChange = (event) => {
         setSearchField(event.target.value);
@@ -15,11 +15,14 @@ function App() {
 
     const handleCheck = (event) => {
         if (event.target.name === 'teacher') {
-            setRoleTeacher(() => !roleTeacher);
+            setIsTeacher(() => !isTeacher);
         } else {
-            setRoleStudent(() => !roleStudent);
+            setIsStudent(() => !isStudent);
         }
     };
+
+    //  {isTeacher && person.role === 'teacher'}
+    // {isStudent && person.role === 'student'}
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -33,6 +36,7 @@ function App() {
                     .includes(searchField.toLowerCase())
             );
         });
+
         console.log('filteredSearch', filteredSearch);
         setUsers(() => [...filteredSearch]);
         // setSearchField('');
@@ -73,14 +77,14 @@ function App() {
             <input
                 type="checkbox"
                 name="teacher"
-                checked={roleTeacher}
+                checked={isTeacher}
                 onChange={handleCheck}
             />
             <label htmlFor="student">Student</label>
             <input
                 type="checkbox"
                 name="student"
-                checked={roleStudent}
+                checked={isStudent}
                 onChange={handleCheck}
             />
             <table style={{ margin: '0 0 10% 5%' }}>

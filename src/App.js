@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import './App.css';
 import usersJson from './users';
 import { v4 as uuidv4 } from 'uuid';
@@ -50,7 +50,6 @@ function App() {
         setUsers(() => [...filteredSearch]);
         // setSearchField('');
     };
-    console.log('campus', campus);
     const campusList = campus.map((camp) => {
         return (
             <option value={camp} key={camp}>
@@ -75,11 +74,12 @@ function App() {
             <Form
                 isStudent={isStudent}
                 isTeacher={isTeacher}
-                campus={campus}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
                 campusList={campusList}
+                campus={campus}
             />
+
             <UsersList displayUsers={displayUsers} />
         </div>
     );

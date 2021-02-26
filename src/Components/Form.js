@@ -30,8 +30,8 @@ const Form = (props) => {
                     handleChange={props.handleChange}
                 />
                 <Dropdown
-                    campus={props.campus}
-                    campusList={props.campusList}
+                    // campuses={props.campusesList}
+                    campusOptions={props.campusOptions}
                     handleChange={props.handleChange}
                 />
             </div>

@@ -10,9 +10,11 @@ function App() {
     const [searchField, setSearchField] = useState('');
     const [isTeacher, setIsTeacher] = useState(true);
     const [isStudent, setIsStudent] = useState(true);
-    const [campus, setCampus] = useState([
+    const [campusesList, setCampusesList] = useState([
         ...new Set(users.map((user) => user.campus)),
     ]);
+    const [selectedCampus, setSelectedCampus] = useState('');
+    const [filtered, setFiltered] = useState([]);
 
     const handleChange = (event) => {
         console.log('type', event.target.type);
@@ -23,11 +25,12 @@ function App() {
                 setIsStudent(() => !isStudent);
             }
         } else if (event.target.type === 'select-one') {
-            setCampus(event.target.value);
+            setSelectedCampus(event.target.value);
         } else {
             setSearchField(event.target.value);
         }
     };
+    console.log('selCamp', selectedCampus);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -42,15 +45,15 @@ function App() {
                 (`${user.lastName}`
                     .toLowerCase()
                     .includes(`${searchField.toLowerCase()}`) &&
-                    (user.campus === campus || !campus))
+                    (user.campus === selectedCampus || !campusesList))
             );
         });
 
         console.log('filteredSearch', filteredSearch);
-        setUsers(() => [...filteredSearch]);
+        setFiltered(() => [...filteredSearch]);
         // setSearchField('');
     };
-    const campusList = campus.map((camp) => {
+    const campusOptions = campusesList.map((camp) => {
         return (
             <option value={camp} key={camp}>
                 {camp}
@@ -58,7 +61,7 @@ function App() {
         );
     });
 
-    const displayUsers = users.map((user) => {
+    const displayUsers = filtered.map((user) => {
         return (
             <tr key={uuidv4()}>
                 <td>{user.firstName}</td>
@@ -76,8 +79,8 @@ function App() {
                 isTeacher={isTeacher}
                 handleChange={handleChange}
                 handleSubmit={handleSubmit}
-                campusList={campusList}
-                campus={campus}
+                campusOptions={campusOptions}
+                campusesList={campusesList}
             />
 
             <UsersList displayUsers={displayUsers} />

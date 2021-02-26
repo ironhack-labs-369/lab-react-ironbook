@@ -7,12 +7,12 @@ const Dropdown = (props) => {
             <select
                 name="campus"
                 id="campus"
-                value={props.campus}
+                // value={props.campusesList}
                 style={{ width: ' 6rem' }}
                 onChange={props.handleChange}
             >
                 <option value="">All</option>
-                {props.campusList}
+                {props.campusOptions}
             </select>
         </div>
     );

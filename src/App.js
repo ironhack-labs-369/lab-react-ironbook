@@ -14,7 +14,6 @@ function App() {
         ...new Set(users.map((user) => user.campus)),
     ]);
     const [selectedCampus, setSelectedCampus] = useState('');
-    const [filtered, setFiltered] = useState([]);
 
     const handleChange = (event) => {
         console.log('type', event.target.type);
@@ -34,25 +33,8 @@ function App() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
-        const filteredSearch = users.filter((user) => {
-            return (
-                (((isTeacher && user.role === 'teacher') ||
-                    (isStudent && user.role === 'student')) &&
-                    `${user.firstName}`
-                        .toLowerCase()
-                        .includes(`${searchField.toLowerCase()}`)) ||
-                (`${user.lastName}`
-                    .toLowerCase()
-                    .includes(`${searchField.toLowerCase()}`) &&
-                    (user.campus === selectedCampus || !campusesList))
-            );
-        });
-
-        console.log('filteredSearch', filteredSearch);
-        setFiltered(() => [...filteredSearch]);
-        // setSearchField('');
     };
+
     const campusOptions = campusesList.map((camp) => {
         return (
             <option value={camp} key={camp}>
@@ -61,7 +43,25 @@ function App() {
         );
     });
 
-    const displayUsers = filtered.map((user) => {
+    const filteredSearch = users.filter((user) => {
+        return (
+            (((isTeacher && user.role === 'teacher') ||
+                (isStudent && user.role === 'student')) &&
+                `${user.firstName}`
+                    .toLowerCase()
+                    .includes(`${searchField.toLowerCase()}`)) ||
+            (`${user.lastName}`
+                .toLowerCase()
+                .includes(`${searchField.toLowerCase()}`) &&
+                (user.campus === selectedCampus || !campusesList))
+        );
+    });
+
+    console.log('filteredSearch', filteredSearch);
+    // setFiltered(() => [...filteredSearch]);
+    // setSearchField('');
+
+    const displayUsers = filteredSearch.map((user) => {
         return (
             <tr key={uuidv4()}>
                 <td>{user.firstName}</td>

@@ -28,7 +28,6 @@ function App() {
             setSearchField(event.target.value);
         }
     };
-    console.log('selCamp', selectedCampus);
 
     const campusOptions = campusesList.map((camp) => {
         return (
@@ -40,20 +39,18 @@ function App() {
 
     const filteredSearch = users.filter((user) => {
         return (
-            (((isTeacher && user.role === 'teacher') ||
+            ((isTeacher && user.role === 'teacher') ||
                 (isStudent && user.role === 'student')) &&
-                `${user.firstName}`
-                    .toLowerCase()
-                    .includes(`${searchField.toLowerCase()}`)) ||
-            (`${user.lastName}`
+            (`${user.firstName}`
                 .toLowerCase()
-                .includes(`${searchField.toLowerCase()}`) &&
-                (user.campus === selectedCampus || !campusesList))
+                .includes(`${searchField.toLowerCase()}`) ||
+                `${user.lastName}`
+                    .toLowerCase()
+                    .includes(`${searchField.toLowerCase()}`)) &&
+            (user.campus === selectedCampus || !selectedCampus)
         );
+        // );
     });
-
-    console.log('filteredSearch', filteredSearch);
-    // setSearchField('');
 
     const displayUsers = filteredSearch.map((user) => {
         return (

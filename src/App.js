@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import usersJson from './users';
+import linkedinlogo from './linkedin.png';
 import { v4 as uuidv4 } from 'uuid';
 import UsersList from './Components/UsersList';
 import Form from './Components/Form';
@@ -59,7 +60,18 @@ function App() {
                 <td>{user.lastName}</td>
                 <td>{user.campus}</td>
                 <td>{user.role}</td>
-                <td>{user.linkedin}</td>
+                <td>
+                    {user.linkedin && (
+                        <a href={user.linkedin}>
+                            <img
+                                className="linkedin"
+                                src={linkedinlogo}
+                                alt="linkedin"
+                                style={{ width: '1rem' }}
+                            />
+                        </a>
+                    )}
+                </td>
             </tr>
         );
     });

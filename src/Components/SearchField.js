@@ -15,7 +15,6 @@ const SearchField = (props) => {
                 onChange={props.handleChange}
                 style={{ width: '20rem' }}
             />
-            <button type="submit">Search</button>
         </div>
     );
 };

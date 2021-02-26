@@ -6,7 +6,6 @@ import SearchField from './SearchField';
 const Form = (props) => {
     return (
         <form
-            onSubmit={props.handleSubmit}
             style={{
                 width: '80vw',
                 display: 'flex',

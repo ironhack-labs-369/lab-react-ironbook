@@ -16,7 +16,6 @@ function App() {
     const [selectedCampus, setSelectedCampus] = useState('');
 
     const handleChange = (event) => {
-        console.log('type', event.target.type);
         if (event.target.type === 'checkbox') {
             if (event.target.name === 'teacher') {
                 setIsTeacher(() => !isTeacher);
@@ -30,10 +29,6 @@ function App() {
         }
     };
     console.log('selCamp', selectedCampus);
-
-    const handleSubmit = (event) => {
-        event.preventDefault();
-    };
 
     const campusOptions = campusesList.map((camp) => {
         return (
@@ -58,7 +53,6 @@ function App() {
     });
 
     console.log('filteredSearch', filteredSearch);
-    // setFiltered(() => [...filteredSearch]);
     // setSearchField('');
 
     const displayUsers = filteredSearch.map((user) => {
@@ -78,7 +72,6 @@ function App() {
                 isStudent={isStudent}
                 isTeacher={isTeacher}
                 handleChange={handleChange}
-                handleSubmit={handleSubmit}
                 campusOptions={campusOptions}
                 campusesList={campusesList}
             />
